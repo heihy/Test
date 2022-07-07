@@ -1,0 +1,46 @@
+name: manage-azure-policy-cd11bbf0
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'policies/Storage_accounts_should_restrict_network_access_using_virtual_network_rules_2a1a9cdf-e04d-429a-8416-3bfb72a1b26f/**'
+#      - 'policies/Storage_accounts_should_restrict_network_access_34c877ad-507e-4c82-993e-3452a6e0ad3c/**'
+#      - 'policies/_Preview_Storage_account_public_access_should_be_disallowed_4fa4b6c0-31ca-4c0d-b10d-24b96f62a751/**'
+#      - 'policies/Storage_Accounts_should_use_a_virtual_network_service_endpoint_60d21c4f-21a3-4d94-85f4-b924e6aeeda4/**'
+#      - 'policies/Storage_accounts_should_use_private_link_6edd7eda-6dd8-40f7-810d-67160c639cd9/**'
+#      - 'policies/Configure_storage_accounts_to_disable_public_network_access_a06d0189-92e8-4dba-b0c4-08d7669fce7d/**'
+#      - 'policies/Storage_accounts_should_disable_public_network_access_b2982f36-99f2-4db5-8eff-283140c09693/**'
+#      - 'policies/Storage_accounts_should_allow_access_from_trusted_Microsoft_services_c9d007d0-c057-4772-b18c-01e546713bcd/**'
+#      - .github/workflows/manage-azure-policy-cd11bbf0.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_cd11bbf0}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          policies/Storage_accounts_should_restrict_network_access_using_virtual_network_rules_2a1a9cdf-e04d-429a-8416-3bfb72a1b26f/**
+          policies/Storage_accounts_should_restrict_network_access_34c877ad-507e-4c82-993e-3452a6e0ad3c/**
+          policies/_Preview_Storage_account_public_access_should_be_disallowed_4fa4b6c0-31ca-4c0d-b10d-24b96f62a751/**
+          policies/Storage_Accounts_should_use_a_virtual_network_service_endpoint_60d21c4f-21a3-4d94-85f4-b924e6aeeda4/**
+          policies/Storage_accounts_should_use_private_link_6edd7eda-6dd8-40f7-810d-67160c639cd9/**
+          policies/Configure_storage_accounts_to_disable_public_network_access_a06d0189-92e8-4dba-b0c4-08d7669fce7d/**
+          policies/Storage_accounts_should_disable_public_network_access_b2982f36-99f2-4db5-8eff-283140c09693/**
+          policies/Storage_accounts_should_allow_access_from_trusted_Microsoft_services_c9d007d0-c057-4772-b18c-01e546713bcd/**
